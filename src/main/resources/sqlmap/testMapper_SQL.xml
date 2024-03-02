@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.or.ddit.mapper.ITestMapper">
+  
+  	<select id="list" resultType="test">
+		SELECT 
+		    LEVEL,
+		    DEPT_NM,
+		    DEPT,
+		    PAR_DEPT,
+		    CONNECT_BY_ISLEAF "leaf"
+		FROM DEPT
+		START WITH PAR_DEPT IS NULL
+		CONNECT BY PAR_DEPT = PRIOR DEPT
+		ORDER SIBLINGS BY DEPT
+  	</select>
+  	
+  	<select id="selectAll" resultType="test">
+  		select 
+  			dept_nm, dept, par_dept
+  		from dept
+  	</select>
+  	
+  	<select id="board" resultType="board">
+  		select
+  			board_no, title, writer, content, reg_date
+  		from board
+  	</select>
+  	
+  </mapper>

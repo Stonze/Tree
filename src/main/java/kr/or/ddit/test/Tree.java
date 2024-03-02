@@ -11,17 +11,18 @@ public class Tree {
         // 부모 노드의 자식 노드가 있다면
         else {
             // 자식 노드의 형제로 노드로 추가
-            Node temp = parent.getLeftChild();
-            while(temp.getRightSibling() != null)
-                temp = temp.getRightSibling();
+            Node temp = parent.getLeftChild(); // 부모노드의 왼쪽 자식노드 temp 저장
+            while(temp.getRightSibling() != null) // temp 오른쪽 노드가 null이 아니면 아래 반복
+                temp = temp.getRightSibling(); // temp에 temp의 오른쪽 노드 저장
              
-            temp.setRightSibling(child);
+            temp.setRightSibling(child); // temp의 오른쪽 노드를 child로 set
         }
     }
     
     // 제거 기능 추가
     public static void delete(Node parent, Node child) {
-    	
+    	// 부모 노드의 자식 노드가 없으면 삭제 x
+    	// 노드 삭제 방법 알아보기
     }
     
      

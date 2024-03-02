@@ -6,7 +6,8 @@ public class TreeTest {
 	 public static void main(String[] args) {
 	        // 루트 생성
 	        Node root = new Node('A');
-	         
+	        
+	        char charNull = '\u0000';
 	        // 노드 생성
 	        Node B = new Node('B');
 	        Node C = new Node('C');
@@ -22,6 +23,8 @@ public class TreeTest {
 	        Node M = new Node('M');
 	        Node N = new Node('N');
 	        Node O = new Node('O');
+	        Node P = new Node(charNull); // 해당 node null setting하면 삭제가능? 안됨
+	        Node Q = new Node('Q');
 	 
 	        // 데이터 추가
 	        Tree.add(root, B);
@@ -41,6 +44,8 @@ public class TreeTest {
 	        Tree.add(L, N);
 	        Tree.add(L, M);
 	        Tree.add(L, O);
+	        Tree.add(L, P);
+	        Tree.add(L, Q);
 	         
 	        // 모두 출력
 	        Tree.printTree(root, 0);
