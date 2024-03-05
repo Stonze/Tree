@@ -17,42 +17,13 @@
 <link rel="stylesheet" href="/resources/jquery_treeview/demo/screen.css">
 </head>
 <body>
-<c:forEach items="${list }" var="tree">
-		${tree.level } | ${tree.deptNm } | ${tree.dept } | ${tree.parDept } | ${tree.leaf }<br />
-	</c:forEach>
 	<div>
-	<ul id="codeList">
-		<li id="0" class="hasChildren">		
-			<span class="dept">전체</span>		
-			<ul>											
-			</ul>	
-		</li>
-	</ul>
- 	<ul id="testList">
-		<c:forEach items="${list }" var="test">
-			<c:if test="${test.parDept eq null }">
-				<li><a class="folder">${test.deptNm }</a>
-			</c:if>
-			<ul>
-			<c:if test="${test.parDept ne null and test.leaf eq 0 }">
-				<ul>
-					<li><a class="folder">${test.deptNm }</a>
-						<ul>
-							<c:forEach items="${list }" var="li">
-								<c:if test="${li.parDept eq test.dept }">
-									<li id="${li.dept }">${li.deptNm }</li> <!-- 수정 필요 -->
-								</c:if>
-							</c:forEach>
-						</ul>
-					</li>
-				</ul>
-			</c:if>
-		</c:forEach>
-			</ul>
-		</li>
-	</ul>
+		<ul id="codeList">
+			<li id="0"><a class="folder code">전체</a>	
+				<ul id="start"><!-- 자식 노드가 들어올 공간--></ul> 	
+			</li>
+		</ul>
 	</div>
-	
 </body>
 <script type="text/javascript">
 
@@ -60,20 +31,51 @@
 	$("#testList").treeview({
 		collapsed : true
 	});
-	$("#codeList").treeview({
-		/* url : "/tree/treeView" + test,
-		root : "codeList",
-		ajax : {
-			type : "get",
-		},
-		data : {
-			test : "test"
-		}, 
-		complete : function (res) {
-			console.log("res : ", res)
-		}, */
-		collapsed : true
+	
+	let testObj = {
+		test : "test"
+	}
+	$.ajax({
+		type : "post",
+		url : "/tree/treeViewTest",
+		success : function(res) {
+			console.log(res);
+			res.forEach(function(e, i) {
+				  let start = $('#start');
+				  let codeNm = e.deptNm;   
+				  let codeId = e.dept;    
+				  let parentId = e.parDept;    
+				  let codeLvl = e.level;    
+				  let li = '<li id="'+ codeId.trim() +'" lvl="' + codeLvl + '"><a class="file code">'+ codeNm +'</a></li>';    
+				  // 1레벨은 그냥 추가    
+				  // 다음 레벨부터는 상위 li의 클래스를 폴더로 바꾸고 자기 자신을 추가  
+				  if(codeLvl == 1) {                              
+				      start.append(li);
+				      console.log(li);
+				  } else {    
+				      let parent = $('#' + parentId);
+				      let parentLi = $("li[id='"+ parentId +"']");
+				      parentLi.find("a").removeClass("file");       
+				      parentLi.find("a").addClass("folder");       
+				      let bUl = parentLi.find("ul");  
+				        
+				      // 하위 그룹이 없으면 ul로 추가    
+				      if(bUl.length == 0) {       
+				          parentLi.append("<ul></ul>"); // 새로운 ul 추가
+				          bUl = parentLi.find("ul"); // 새로운 ul을 bUl로 지정
+				      } 
+				      if (parentId == "DE_001") {
+				       	let company = $('#DE_001');
+				        company.append(li);
+					} else {
+					    bUl.append(li); // 이미 존재하는 ul에 li 추가
+					}
+				}
+			});
+			$("#codeList").treeview({
+				collapsed : true
+			});
+		}
 	});
-
 </script>
 </html>

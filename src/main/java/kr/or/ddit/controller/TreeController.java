@@ -13,13 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.service.ITreeServiec;
 import kr.or.ddit.vo.Board;
 import kr.or.ddit.vo.Test;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/tree")
@@ -77,6 +77,14 @@ public class TreeController {
 		model.addAttribute("list", list);
 		return "treeView";
 	}
+	
+	@RequestMapping(value = "/treeViewTest", method = RequestMethod.POST)
+	public ResponseEntity<JSONArray> treeViewTest() {
+		List<Test> list = service.list();
+		JSONArray jsonArray = new JSONArray().fromObject(list);
+		return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
+	}
+	
 	
 	
 }
