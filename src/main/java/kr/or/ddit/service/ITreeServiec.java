@@ -10,5 +10,6 @@ public interface ITreeServiec {
 	public List<Test> list();
 	public List<Test> selectAll();
 	public List<Board> board();
+	public Test getDept(String dept);
 
 }

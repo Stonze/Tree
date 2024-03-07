@@ -31,4 +31,9 @@ public class TreeServiceImpl implements ITreeServiec {
 		return mapper.board();
 	}
 
+	@Override
+	public Test getDept(String dept) {
+		return mapper.getDept(dept);
+	}
+
 }

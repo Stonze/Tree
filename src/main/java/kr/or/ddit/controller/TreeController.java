@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.or.ddit.service.ITreeServiec;
 import kr.or.ddit.vo.Board;
 import kr.or.ddit.vo.Test;
@@ -83,6 +86,14 @@ public class TreeController {
 		List<Test> list = service.list();
 		JSONArray jsonArray = new JSONArray().fromObject(list);
 		return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/getDept", method = RequestMethod.POST, produces = "application/text; charset=utf-8")
+	public ResponseEntity<String> getDept(@RequestBody String dept) throws Exception {
+		Test test = service.getDept(dept);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(test);
+		return new ResponseEntity<String>(jsonString, HttpStatus.OK);
 	}
 	
 	
