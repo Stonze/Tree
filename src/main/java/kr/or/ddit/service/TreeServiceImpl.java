@@ -36,4 +36,19 @@ public class TreeServiceImpl implements ITreeServiec {
 		return mapper.getDept(dept);
 	}
 
+	@Override
+	public int insertDept(Test test) {
+		return mapper.insertDept(test);
+	}
+
+	@Override
+	public int updateDept(Test test) {
+		return mapper.updateDept(test);
+	}
+
+	@Override
+	public int deleteDept(Test test) {
+		return mapper.deleteDept(test);
+	}
+
 }

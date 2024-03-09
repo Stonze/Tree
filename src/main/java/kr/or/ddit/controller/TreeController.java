@@ -81,6 +81,11 @@ public class TreeController {
 		return "treeView";
 	}
 	
+	@RequestMapping(value = "/treeTest", method = RequestMethod.GET)
+	public String treeTest(Model model) {
+		return "treeTest";
+	}
+	
 	@RequestMapping(value = "/treeViewTest", method = RequestMethod.POST)
 	public ResponseEntity<JSONArray> treeViewTest() {
 		List<Test> list = service.list();
@@ -88,12 +93,61 @@ public class TreeController {
 		return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/getDept", method = RequestMethod.POST, produces = "application/text; charset=utf-8")
 	public ResponseEntity<String> getDept(@RequestBody String dept) throws Exception {
 		Test test = service.getDept(dept);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(test);
 		return new ResponseEntity<String>(jsonString, HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/insertDept", method = RequestMethod.POST)
+	public ResponseEntity<String> insertDept(@RequestBody Test test) {
+		ResponseEntity<String> result = null;
+		log.info("dept : " + test.getDept());
+		log.info("pardept : " + test.getParDept());
+		log.info("deptnm : " + test.getDeptNm());
+		int status = service.insertDept(test);
+		if (status > 0) {
+			result = new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			result = new ResponseEntity<String>("failed", HttpStatus.OK);
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updateDept", method = RequestMethod.POST)
+	public ResponseEntity<String> updateDept(@RequestBody Test test) {
+		ResponseEntity<String> result = null;
+		log.info("dept : " + test.getDept());
+		log.info("pardept : " + test.getParDept());
+		log.info("deptnm : " + test.getDeptNm());
+		int status = service.updateDept(test);
+		if (status > 0) {
+			result = new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			result = new ResponseEntity<String>("failed", HttpStatus.OK);
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteDept", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteDept(@RequestBody Test test) {
+		ResponseEntity<String> result = null;
+		log.info("dept : " + test.getDept());
+		log.info("pardept : " + test.getParDept());
+		log.info("deptnm : " + test.getDeptNm());
+		int status = service.deleteDept(test);
+		if (status > 0) {
+			result = new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			result = new ResponseEntity<String>("failed", HttpStatus.OK);
+		}
+		return result;
 	}
 	
 	

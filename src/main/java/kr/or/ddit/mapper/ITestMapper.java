@@ -11,5 +11,8 @@ public interface ITestMapper {
 	public List<Test> selectAll();
 	public List<Board> board();
 	public Test getDept(String dept);
+	public int insertDept(Test test);
+	public int updateDept(Test test);
+	public int deleteDept(Test test);
 	
 }

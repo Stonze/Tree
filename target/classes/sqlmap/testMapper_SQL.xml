@@ -35,4 +35,25 @@
   		where dept_nm = #{dept}
   	</select>
   	
+  	<insert id="insertDept" parameterType="test">
+  		insert into dept (
+  			 dept, par_dept, dept_nm
+  		) values (
+  			#{dept}, #{parDept}, #{deptNm}
+  		)
+  	</insert>
+  	
+  	<update id="updateDept" parameterType="test">
+  		update dept
+  		set
+  			par_dept = #{parDept},
+  			dept_nm = #{deptNm}
+  		where dept = #{dept}
+  	</update>
+  	
+  	<delete id="deleteDept" parameterType="test">
+  		delete from dept
+  		where dept = #{dept}
+  	</delete>
+  	
   </mapper>
