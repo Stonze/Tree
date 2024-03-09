@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias type="kr.or.ddit.vo.Test" alias="test"/>
 		<typeAlias type="kr.or.ddit.vo.Board" alias="board"/>
+		<typeAlias type="kr.or.ddit.vo.Emp" alias="emp"/>
 	</typeAliases>
 
 </configuration>

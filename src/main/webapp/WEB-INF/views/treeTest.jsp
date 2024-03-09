@@ -22,7 +22,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col-sm-8">
+	<div class="col-sm-5">
 		<table>
 			<tr>
 				<td>DEPT</td>
@@ -101,9 +101,33 @@ $(function() {
 				        }
 				    }
 				});
-
+				
                 $('#codeList').treeview({
                     data: treeData, // 로드한 데이터로 트리뷰를 갱신
+                    onNodeExpanded: function(event, node) {
+                        // "+" 아이콘을 클릭한 경우에 대한 처리
+                        console.log("Clicked on the + icon");
+                        // 여기에 추가적인 동작을 작성하세요
+                        if (node.id != "DE_001") {
+                        	$.ajax({
+    							url : "/tree/getEmp",
+    							type : "post",
+    							contentType : "application/text; charset=utf-8",
+    							data : node.id,
+    							success : function (res) {
+    								console.log(res);
+    								for (let i  = 0; i < res.length; i++){
+    									let newObj = {
+    										text : res[i].empName,
+    									};
+	    								node.nodes.push(newObj);
+    								}
+    					            console.log(node.nodes);
+    							}
+    						});
+                        }
+                    },
+                    
                     onNodeSelected: function(event, node) {
                         if (node.text != "회사") {
                         	$.ajax({
@@ -203,7 +227,6 @@ $(function() {
 		}
      });
 });
-	
 	
 </script>
 </html>

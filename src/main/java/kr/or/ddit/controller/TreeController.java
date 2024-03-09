@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.ddit.service.IEmpService;
 import kr.or.ddit.service.ITreeServiec;
 import kr.or.ddit.vo.Board;
+import kr.or.ddit.vo.Emp;
 import kr.or.ddit.vo.Test;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
@@ -31,6 +33,9 @@ public class TreeController {
 	
 	@Inject
 	private ITreeServiec service;
+	
+	@Inject
+	private IEmpService empService;
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String treeTest() {
@@ -148,6 +153,15 @@ public class TreeController {
 			result = new ResponseEntity<String>("failed", HttpStatus.OK);
 		}
 		return result;
+	}
+	
+	@RequestMapping(value = "/getEmp", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	public ResponseEntity<JSONArray> getEmp(@RequestBody String dept) {
+		log.info("dept : " + dept);
+		List<Emp> empList = empService.getEmp(dept);
+		log.info("size : " + empList.size());
+		JSONArray jsonArray = new JSONArray().fromObject(empList);
+		return new ResponseEntity<JSONArray>(jsonArray, HttpStatus.OK);
 	}
 	
 	
