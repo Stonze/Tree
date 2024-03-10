@@ -1,0 +1,48 @@
+package kr.or.ddit.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.mapper.ITestMapper;
+import kr.or.ddit.vo.Test;
+
+@Service
+public class TreeServiceImpl implements ITreeServiec {
+	
+	@Inject
+	private ITestMapper mapper;
+
+	@Override
+	public List<Test> list() {
+		return mapper.list();
+	}
+
+	@Override
+	public List<Test> selectAll() {
+		return mapper.selectAll();
+	}
+
+	@Override
+	public Test getDept(String dept) {
+		return mapper.getDept(dept);
+	}
+
+	@Override
+	public int insertDept(Test test) {
+		return mapper.insertDept(test);
+	}
+
+	@Override
+	public int updateDept(Test test) {
+		return mapper.updateDept(test);
+	}
+
+	@Override
+	public int deleteDept(Test test) {
+		return mapper.deleteDept(test);
+	}
+
+}
